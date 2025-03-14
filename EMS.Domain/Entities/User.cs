@@ -15,6 +15,7 @@ namespace EMS.Domain.Entities
         public string Email { get; set; }
         public bool ConfirmAccount { get; set; }
         public string HashedPassword { get; set; }
+        public string? Code { get; set; }
         public Employee? Employee { get; set; }
         public Token Token { get; set; }
 
@@ -22,5 +23,8 @@ namespace EMS.Domain.Entities
 
         public void HashPassword(IPasswordHasher<User> passwordHasher, string password) =>
             HashedPassword = passwordHasher.HashPassword(this, password);
+
+        public void HashedCode(IPasswordHasher<User> passwordHasher, string code) =>
+            Code = passwordHasher.HashPassword(this, code);
     }
 }

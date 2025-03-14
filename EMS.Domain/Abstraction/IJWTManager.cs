@@ -6,5 +6,6 @@ namespace EMS.Domain.Abstraction
     {
         Task<Token> GenerateTokenAsync(User user, CancellationToken cancellationToken = default);
         Task<User> LoginAsync(User user, CancellationToken cancellationToken = default);
+        Task<string> GenerateCodeAsync();
     }
 }

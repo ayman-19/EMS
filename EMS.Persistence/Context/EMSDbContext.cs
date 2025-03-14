@@ -10,11 +10,16 @@ namespace EMS.Persistence.Context
         public EMSDbContext(DbContextOptions<EMSDbContext> options)
             : base(options) { }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             builder.AddQuartz(cfg => cfg.UseSqlServer(schema: "dbo"));
-            base.OnModelCreating(builder);
         }
     }
 }

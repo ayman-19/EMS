@@ -15,6 +15,13 @@ namespace EMS.Domain.Abstraction
             CancellationToken cancellationToken = default
         );
 
+        Task<TEntity> GetAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null!,
+            bool astracking = true,
+            CancellationToken cancellationToken = default
+        );
+
         Task<IReadOnlyCollection<TSelctor>> GetAllAsync<TSelctor>(
             Expression<Func<TEntity, TSelctor>> Selctor,
             Expression<Func<TEntity, bool>> predicate = default!,

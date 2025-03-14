@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using System.Numerics;
 using EMS.Domain.Abstraction;
 using EMS.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
@@ -78,6 +79,27 @@ namespace EMS.Persistence.Repositories
                 query = includes(query);
 
             return query.Select(Selctor).FirstAsync(cancellationToken);
+        }
+
+        public Task<TEntity> GetAsync(
+            Expression<Func<TEntity, bool>> predicate,
+            Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> includes = null,
+            bool astracking = true,
+            CancellationToken cancellationToken = default
+        )
+        {
+            var query = _entities.AsQueryable();
+
+            if (!astracking)
+                query = query.AsNoTracking();
+
+            if (predicate != null)
+                query = query.Where(predicate);
+
+            if (includes != null)
+                query = includes(query);
+
+            return query.FirstAsync(cancellationToken);
         }
 
         public async Task<bool> IsAnyExistAsync(

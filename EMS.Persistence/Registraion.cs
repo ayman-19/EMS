@@ -1,6 +1,7 @@
 ﻿using EMS.Domain.Abstraction;
 using EMS.Persistence.Context;
 using EMS.Persistence.Repositories;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,7 @@ namespace EMS.Persistence
         {
             string connectionString = configuration.GetConnectionString("EMS_CONNECTIONSTRING");
 
-            services.AddDbContextPool<EMSDbContext>(cfg =>
+            services.AddDbContext<EMSDbContext>(cfg =>
             {
                 cfg.UseSqlServer(connectionString);
             });
@@ -25,7 +26,7 @@ namespace EMS.Persistence
                 .AddScoped<IUnitOfWork, UnitOfWork>()
                 .AddScoped(typeof(IRepository<>), typeof(Repository<>))
                 .AddScoped<IUserRepository, UserRepository>()
-                //.AddScoped<IEmailSender, EmailSender>()
+                .AddScoped<IEmailSender, EmailSender>()
                 .AddScoped<ITokenRepository, TokenRepository>()
                 .AddScoped<IJWTManager, JWTManager>()
                 .AddScoped<IDepartmentRepository, DepartmentRepository>()
@@ -33,6 +34,8 @@ namespace EMS.Persistence
                 .AddScoped<IUserRepository, UserRepository>()
                 .AddScoped<IPositionRepository, PositionRepository>()
                 .AddScoped<ITokenRepository, TokenRepository>()
+                .AddScoped<IJobs, Jobs>();
+            services
                 .AddQuartz(q =>
                 {
                     q.UsePersistentStore(op =>
