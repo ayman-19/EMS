@@ -16,7 +16,7 @@ namespace EMS.Domain.Entities
         public bool ConfirmAccount { get; set; }
         public string HashedPassword { get; set; }
         public string? Code { get; set; }
-        public Employee? Employee { get; set; }
+        public Employee Employee { get; set; }
         public Token Token { get; set; }
 
         public static User Create(string name, string email) => new(name, email);

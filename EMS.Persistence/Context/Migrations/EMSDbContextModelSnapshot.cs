@@ -570,6 +570,10 @@ namespace EMS.Persistence.Context.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -587,13 +591,13 @@ namespace EMS.Persistence.Context.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("DepartmentId")
+                    b.Property<Guid?>("DepartmentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("JoiningDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("PositionId")
+                    b.Property<Guid?>("PositionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Salary")
@@ -613,6 +617,10 @@ namespace EMS.Persistence.Context.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -741,9 +749,7 @@ namespace EMS.Persistence.Context.Migrations
                 {
                     b.HasOne("EMS.Domain.Entities.Department", "Department")
                         .WithMany("Employees")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("DepartmentId");
 
                     b.HasOne("EMS.Domain.Entities.User", "User")
                         .WithOne("Employee")
@@ -753,9 +759,7 @@ namespace EMS.Persistence.Context.Migrations
 
                     b.HasOne("EMS.Domain.Entities.Position", "Position")
                         .WithMany("Employees")
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("PositionId");
 
                     b.Navigation("Department");
 
@@ -803,7 +807,8 @@ namespace EMS.Persistence.Context.Migrations
 
             modelBuilder.Entity("EMS.Domain.Entities.User", b =>
                 {
-                    b.Navigation("Employee");
+                    b.Navigation("Employee")
+                        .IsRequired();
 
                     b.Navigation("Token")
                         .IsRequired();

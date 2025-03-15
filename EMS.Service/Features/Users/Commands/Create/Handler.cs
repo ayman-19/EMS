@@ -43,7 +43,7 @@ namespace EMS.Application.Features.Users.Commands.Create
                 {
                     User user = request;
                     user.HashPassword(_passwordHasher, request.password);
-
+                    user.Employee = new() { JoiningDate = DateTime.UtcNow };
                     EntityEntry<User> result = await _userRepository.CreateAsync(
                         user,
                         cancellationToken

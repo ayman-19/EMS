@@ -2,5 +2,8 @@
 
 namespace EMS.Domain.Abstraction
 {
-    public interface IDepartmentRepository : IRepository<Department> { }
+    public interface IDepartmentRepository : IRepository<Department>
+    {
+        ValueTask DeleteByIdAsync(Guid Id, CancellationToken cancellationToken);
+    }
 }
