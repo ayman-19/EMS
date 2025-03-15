@@ -3,7 +3,7 @@ using Quartz;
 
 namespace EMS.Persistence.BackgroundJobs
 {
-    public class SendEmailJob : IJob
+    public sealed class SendEmailJob : IJob
     {
         private readonly IEmailSender _emailSender;
 

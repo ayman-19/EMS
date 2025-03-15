@@ -63,6 +63,9 @@ namespace EMS.Application.Features.Users.Commands.Create
                         user.Email,
                         $"To Confirm Email Code: <h3>{code}</h3>"
                     );
+
+                    await _jobs.DeleteUserByJobAsync(user.Email);
+
                     return new ResponseOf<CreateUserResult>
                     {
                         Message = "Success.",

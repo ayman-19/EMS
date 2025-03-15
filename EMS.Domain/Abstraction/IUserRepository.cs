@@ -2,5 +2,11 @@
 
 namespace EMS.Domain.Abstraction
 {
-    public interface IUserRepository : IRepository<User> { }
+    public interface IUserRepository : IRepository<User>
+    {
+        Task DeleteUserNotConfirmByEmailAsync(
+            string Email,
+            CancellationToken cancellationToken = default
+        );
+    }
 }
